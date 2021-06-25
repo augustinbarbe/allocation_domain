@@ -1,0 +1,40 @@
+version: '3.2'
+
+services:
+  worker:
+    build: .
+    command: worker
+    env_file:
+      - ${PWD}/config/.env-${ENV}
+    depends_on:
+      - migration
+  migration:
+      env_file:
+      - ${PWD}/config/.env-${ENV}
+      build: .
+      command: upgrade
+  api:
+      stdin_open: true
+      tty: true
+      env_file:
+      - ${PWD}/config/.env-${ENV}
+      environment:
+        - FLASK_APP=allocation.entrypoints.api:create_app()
+      build: .
+      command: flask run --host 0.0.0.0 --port 8000 --without-threads
+      depends_on:
+        - database
+      ports: 
+        - 8000:8000
+      volumes:
+      - type: bind
+        source: ./
+        target: /usr/src/app/
+        volume:
+          nocopy: true
+  database:
+      image: 'postgres:latest'
+      environment:
+        - POSTGRES_PASSWORD=password
+      ports: 
+        - 5432:5432

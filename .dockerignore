@@ -1,0 +1,11 @@
+.git
+conftest.py
+tests
+requirements-test.txt
+.gitignore
+bitbucket-pipelines.yml
+README.md
+tox.ini
+makefile
+docker-compose.yml
+docs
