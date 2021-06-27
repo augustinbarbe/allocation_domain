@@ -1,6 +1,6 @@
 # pylint: disable=too-few-public-methods
 from dataclasses import dataclass
-from uuid import UUID, uuid4
+from uuid import UUID
 from datetime import datetime
 
 from allocation.domain import exc

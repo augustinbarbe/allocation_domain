@@ -1,4 +1,5 @@
 from uuid import UUID
+import importlib
 
 
 def validate_uuid4(uuid_string):
@@ -12,3 +13,11 @@ def validate_uuid4(uuid_string):
         return False
 
     return val.hex == uuid_string.replace("-", "")
+
+
+def load_config(file_path: str):
+    """Helper to load config file as module"""
+    spec = importlib.util.spec_from_file_location("config", file_path)
+    config = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(config)
+    return config

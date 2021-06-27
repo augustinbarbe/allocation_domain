@@ -93,8 +93,7 @@ class Pool:
 
     def can_allocate(self, request: Request) -> bool:
         return (
-            self.resource_id == request.resource_id
-            and self.available_quantity >= request.quantity
+            self.resource_id == request.resource_id and self.available_quantity >= request.quantity
         )
 
 
